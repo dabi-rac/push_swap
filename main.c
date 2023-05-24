@@ -3,67 +3,122 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fcarlucc <fcarlucc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dabi-rac <dabi-rac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/25 19:16:38 by fcarlucc          #+#    #+#             */
-/*   Updated: 2023/03/28 17:35:07 by fcarlucc         ###   ########.fr       */
+/*   Created: 2023/05/24 21:59:20 by dabi-rac          #+#    #+#             */
+/*   Updated: 2023/05/24 21:59:21 by dabi-rac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-static  void    sort_due(t_stack *stk)
+static size_t	get_word(const char *s, char c)
 {
-    if (!(stk->stack_a[0] < stk->stack_a[1]))
-        sa(stk);
-    write(1, "OK\n", 3);
-    return ;
+	size_t	words;
+
+	words = 0;
+	while (*s)
+	{
+		if (*s != c)
+		{
+			++words;
+			while (*s && *s != c)
+				++s;
+		}
+		else
+			++s;
+	}
+	return (words);
 }
 
-static  void    sort_tre(t_stack *stk)
+static	char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
-    printf("ss%d\nss%d\nss%d\n", stk->stack_a[0], stk->stack_a[1], stk->stack_a[2]);
-    while (!(stk->stack_a[0] < stk->stack_a[1] &&  stk->stack_a[1] < stk->stack_a[2]))
-    {
-        if (stk->stack_a[1] < stk->stack_a[0] && stk->stack_a[0] < stk->stack_a[2])
-            sa(stk);
-        if (stk->stack_a[2] < stk->stack_a[1] && stk->stack_a[1] < stk->stack_a[0])
-            sa(stk);
-        if (stk->stack_a[0] < stk->stack_a[2] && stk->stack_a[2] < stk->stack_a[1])
-            sa(stk);
-        if (stk->stack_a[1] < stk->stack_a[2] && stk->stack_a[2] < stk->stack_a[0])
-            ra(stk);      
-        if (stk->stack_a[0] < stk->stack_a[1] && stk->stack_a[2] < stk->stack_a[0])
-            rra(stk);
-    }
-    write(1, "OK\n", 3);
-    return ;
+	char	*str;
+	size_t	i;
+	size_t	j;
+
+	if (!s)
+		return (NULL);
+	str = (char *)malloc(sizeof(*s) * (len + 1));
+	i = 0;
+	j = 0;
+	if (!str)
+		return (NULL);
+	while (s[i])
+	{
+		if (i >= start && j < len)
+			str[j++] = s[i];
+		i++;
+	}
+	str[j] = '\0';
+	return (str);
 }
 
-int main(int ac, char **av)
+static	char	**ft_split(const char *s, char c)
 {
-    int i;
-    t_stack stk;
+	char	**str;
+	size_t	i;
+	size_t	len;
 
-    stk.stack_a = NULL;
-    if (ac < 2)
-        write(2, "ERRORE: specificare almeno 1 argomento\n", 40);
-    stk.la = len_stack_a(av[1]);
-    if (ac == 2)
-    {
-        stk.la = len_stack_a(av[1]);
-        fill_arg(av[1], &stk);
-    }
-    else if (ac > 2)
-        fill_args(ac, av, &stk);
-    i = 0;
-    while (i < stk.la)
-        i++;
-    // printf("%d", stk.stack_a[i]);
-    if (i == 2)
-        sort_due(&stk);
-    if (i == 3)
-        sort_tre(&stk);
-    free(stk.stack_a);
-    return (0);
+	if (!s)
+		return (0);
+	i = 0;
+	str = malloc(sizeof(char *) * (get_word(s, c) + 1));
+	if (!str)
+		return (0);
+	while (*s)
+	{
+		if (*s != c)
+		{
+			len = 0;
+			while (*s && *s != c && ++len)
+				++s;
+			str[i++] = ft_substr(s - len, 0, len);
+		}
+		else
+			++s;
+	}
+	str[i] = 0;
+	return (str);
+}
+
+void	fill_stack(char **av)
+{
+	t_stack	stk;
+	int		size;
+	int		i;
+
+	stk.nmoves = 0;
+	i = -1;
+	size = len_stack(av);
+	stk.stack_a = malloc(size * sizeof(int));
+	if (!stk.stack_a)
+		return ;
+	stk.la = size;
+	stk.stack_b = malloc(size * sizeof(int));
+	if (!stk.stack_b)
+	{
+		free(stk.stack_a);
+		return ;
+	}
+	stk.lb = 0;
+	while (++i < size)
+		stk.stack_a[i] = push_swap_atoi(av[i], stk.stack_a);
+	check_doubles(stk.stack_a, size);
+	sort(&stk, size);
+	free(stk.stack_a);
+	free(stk.stack_b);
+}
+
+int	main(int argc, char **av)
+{
+	if (argc > 1)
+	{
+		av++;
+		if (argc == 2)
+			av = ft_split(*av, ' ');
+		fill_stack(av);
+		return (0);
+	}
+	return (0);
 }

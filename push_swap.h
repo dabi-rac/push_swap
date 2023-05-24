@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap->h                                        :+:      :+:    :+:   */
+/*   push_swap.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fcarlucc <fcarlucc@student->42->fr>          +#+  +:+       +#+        */
+/*   By: dabi-rac <dabi-rac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/24 12:52:05 by fcarlucc          #+#    #+#             */
-/*   Updated: 2023/03/27 23:35:52 by fcarlucc         ###   ########->fr       */
+/*   Created: 2023/05/24 21:59:00 by dabi-rac          #+#    #+#             */
+/*   Updated: 2023/05/24 21:59:01 by dabi-rac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,21 +16,16 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <limits.h>
-# include <stddef.h>
 
 typedef struct s_stack
 {
 	int	*stack_a;
 	int	*stack_b;	
 	int	la;
-	int lb;
+	int	lb;
+	int	nmoves;
 }		t_stack;
 
-int		len_stack_a(char *str);
-int		correct_char(char *str);
-int		check_stack(t_stack *stk);
-void	fill_arg(char *str, t_stack *stk);
-void	fill_args(int ac, char **av, t_stack *stk);
 void	pa(t_stack *stk);
 void	pb(t_stack *stk);
 void	sa(t_stack *stk);
@@ -42,4 +37,17 @@ void	rr(t_stack *stk);
 void	rra(t_stack *stk);
 void	rrb(t_stack *stk);
 void	rrr(t_stack *stk);
+void	ft_error(int *stack);
+int		len_stack(char **av);
+void	fill_stack(char **av);
+void	sort_3_a(t_stack *stk);
+int		sort(t_stack *stk, int size);
+int		sort_3_b(t_stack *stk, int len);
+void	check_doubles(int *stack, int size);
+int		push_swap_atoi(char *str, int *stack);
+int		ft_push(t_stack *stk, int len, int push);
+int		quicksort_a(t_stack *stk, int len, int rot);
+int		quicksort_b(t_stack *stk, int len, int rot);
+int		check_sorted(int *stack, int size, int order);
+
 #endif
