@@ -6,7 +6,7 @@
 /*   By: dabi-rac <dabi-rac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 21:58:55 by dabi-rac          #+#    #+#             */
-/*   Updated: 2023/05/24 21:58:56 by dabi-rac         ###   ########.fr       */
+/*   Updated: 2023/10/05 19:43:47 by dabi-rac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ static	void	quicksort_stacks(t_stack *stk, int len)
 	}
 	else if (len == 3)
 	{
-		while (len != 3 || !(stk->stack_a[0] < stk->stack_a[1] 
+		while (len != 3 || !(stk->stack_a[0] < stk->stack_a[1]
 				&& stk->stack_a[1] < stk->stack_a[2]))
 		{
 			if (len == 3 && stk->stack_a[0] > stk->stack_a[1] \

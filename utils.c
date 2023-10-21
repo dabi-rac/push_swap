@@ -6,7 +6,7 @@
 /*   By: dabi-rac <dabi-rac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 21:58:39 by dabi-rac          #+#    #+#             */
-/*   Updated: 2023/05/24 21:58:42 by dabi-rac         ###   ########.fr       */
+/*   Updated: 2023/10/05 19:43:44 by dabi-rac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,6 @@ void	check_doubles(int *stack, int size)
 void	ft_error(int *stack)
 {
 	free(stack);
-	write(1, "Error\n", 6);
+	write(0, "Error\n", 6);
 	exit (1);
 }
